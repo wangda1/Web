@@ -63,6 +63,28 @@ dust.render("intro",{"name" : "Fred"},function(err,out) {
 - dust.loadsource(),注册；para1: 可执行代码字符串，将模板代码注册到dust中；
 - dust.render(),渲染：para1: 模板名，para2: JSON对象，para3: 回调函数，其中回调函数包含：para1: 错误信息，para2: 渲染结果字符串。
 
+## Hadoop UI
+这里记录一下Hadoop UI里的http://namenode:50070页面的dust是怎么应用的：
+html 界面中最后引入的：
+```javascript
+<script type="text/javascript" src="/static/jquery-1.10.2.min.js">
+</script><script type="text/javascript" src="/static/bootstrap-3.0.2/js/bootstrap.min.js">
+</script><script type="text/javascript" src="/static/dust-full-2.0.0.min.js">
+</script><script type="text/javascript" src="/static/dust-helpers-1.1.1.min.js">
+</script><script type="text/javascript" src="/static/dfs-dust.js">
+</script><script type="text/javascript" src="dfshealth.js">
+</script>
+```
+在html页面中嵌入模板代码，在dfshealth.js中，开头则是对于模板的编译，加载代码：
+```javascript
+  dust.loadSource(dust.compile($('#tmpl-dfshealth').html(), 'dfshealth'));
+  dust.loadSource(dust.compile($('#tmpl-startup-progress').html(), 'startup-progress'));
+  dust.loadSource(dust.compile($('#tmpl-datanode').html(), 'datanode-info'));
+  dust.loadSource(dust.compile($('#tmpl-snapshot').html(), 'snapshot-info'));
+```
+
+
+
 
 ## 语法简介
 [Dust在线测试器](http://www.dustjs.com/test/test.html)
